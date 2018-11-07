@@ -1,6 +1,6 @@
 # refuel
 
-> A Node + mysql project
+> 后端项目 Node + express + mysql
 
 ## Build Setup
 
