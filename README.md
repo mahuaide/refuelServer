@@ -1,6 +1,6 @@
 # refuel
 
-> A Node project
+> A Node + mysql project
 
 ## Build Setup
 
