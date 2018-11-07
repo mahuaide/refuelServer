@@ -1,0 +1,122 @@
+/**
+ * 加油记录
+ */
+var moment = require('moment');
+var db = require('../dbconnect/dbconnect');
+var formidable = require('formidable');
+var utils = require('../utils/utils');
+
+module.exports = {
+    //查询所有加油记录信息
+    getRefuelLogAll(req, res){
+        var sql = `select SQL_CALC_FOUND_ROWS 
+        a.refuel_id,
+        a.refuel_station_id,
+        a.refuel_time,
+        a.pay_money,
+        a.pay_type,
+        a.oil_type,
+        a.liters,
+        b.station_name,
+        b.station_address 
+        from refuel_log a,gas_station b 
+        where a.refuel_station_id = b.station_id and a.userId = ? 
+        order by a.refuel_time desc limit ?,?;
+        select FOUND_ROWS() as count;
+        select sum(a.pay_money) as sum from refuel_log a where a.userId = ?;`;
+        var page = parseInt(req.query.page);
+        var pageSize = parseInt(req.query.pageSize);
+        var userId = req.session.userId;
+        var values = [userId, --page * pageSize, pageSize, userId];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                data[0] = utils.formate(data[0]);
+                res.json({
+                    code: 200,
+                    count: data[1][0].count,
+                    log: data[0],
+                    sum: data[2][0].sum
+                })
+            }
+        })
+    },
+    //根据加油站ID，更新加油站信息
+    updateRefuelLogById(req, res){
+        var sql = 'update refuel_log set refuel_station_id=?,oil_type=?,liters=?,pay_type=?,pay_money=?,refuel_time=? where refuel_id=?';
+        var refuel_id = req.params.id;
+        var form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+            var refuel_station_id = fields.refuel_station_id;
+            var oil_type = fields.oil_type;
+            var liters = fields.liters;
+            var pay_type = fields.pay_type;
+            var pay_money = fields.pay_money;
+            var refuel_time = new Date(fields.refuel_time);
+            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, refuel_id];
+            db.connnectPool(sql, values, (err, data, errMsg) => {
+                if (err) {
+                    res.json({
+                        code: 500,
+                        errMsg: errMsg
+                    })
+                } else {
+                    res.json({
+                        code: 200,
+                        data: {}
+                    })
+                }
+            })
+        });
+    },
+    //增加一条加油记录
+    newRefuelLog(req, res){
+        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId) values (?,?,?,?,?,?,?)';
+        var form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+            var refuel_station_id = fields.refuel_station_id;
+            var oil_type = fields.oil_type;
+            var liters = fields.liters;
+            var pay_type = fields.pay_type;
+            var pay_money = fields.pay_money;
+            var refuel_time = new Date(fields.refuel_time);
+            var userId = req.session.userId;
+            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, userId];
+            db.connnectPool(sql, values, (err, data, errMsg) => {
+                if (err) {
+                    res.json({
+                        code: 500,
+                        errMsg: errMsg
+                    })
+                } else {
+                    res.json({
+                        code: 200,
+                        data: {}
+                    })
+                }
+            })
+        });
+    },
+    //根据加油记录ID，删除加油记录信息
+    delRefuelLogById(req, res){
+        var sql = 'delete from refuel_log where refuel_id = ?';
+        var values = [req.params.id];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                res.json({
+                    code: 200,
+                    data: {}
+                })
+            }
+        })
+    }
+}
