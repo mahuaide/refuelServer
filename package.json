@@ -9,7 +9,7 @@
   "author": "mahd",
   "license": "ISC",
   "engines": {
-    "node": "6.9.5"
+    "node": ">= 6.0.0"
   },
   "dependencies": {
     "express": "^4.16.3",
