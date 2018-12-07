@@ -21,6 +21,7 @@ module.exports = {
     updateRefuelLogById: REFUEL + '/updateInfo/:id',
     newRefuelLog: REFUEL + '/create',
     delRefuelLog: REFUEL + '/delete/:id',
+    getRefuelLogInStation: REFUEL + '/query/instation',
 
     /**
      * 用户信息

@@ -20,6 +20,7 @@ router.delete(api.delStation, station.delStationById);
  * 加油记录
  */
 router.get(api.getRefuelLogAll, refuel.getRefuelLogAll);
+router.get(api.getRefuelLogInStation, refuel.getRefuelLogInStation);
 router.post(api.updateRefuelLogById, refuel.updateRefuelLogById);
 router.post(api.newRefuelLog, refuel.newRefuelLog);
 router.delete(api.delRefuelLog, refuel.delRefuelLogById);

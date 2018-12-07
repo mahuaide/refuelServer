@@ -7,6 +7,39 @@ var formidable = require('formidable');
 var utils = require('../utils/utils');
 
 module.exports = {
+    //统计每个加油站的加油次数和钱数，同时返回加油站经纬度
+    getRefuelLogInStation(req, res){
+        var sql = `SELECT 
+    a.refuel_station_id,
+    b.station_name,
+    b.station_address,
+    SUM(a.pay_money) as total_money,
+    COUNT(*) as count,
+    b.lng,
+    b.lat
+FROM
+    refuel_log a,
+    gas_station b
+WHERE
+    a.refuel_station_id = b.station_id
+    and a.userId= ? 
+GROUP BY a.refuel_station_id`;
+        var userId = req.session.userId;
+        var values = [userId];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                res.json({
+                    code: 200,
+                    data: data,
+                })
+            }
+        })
+    },
     //查询所有加油记录信息
     getRefuelLogAll(req, res){
         var sql = `select SQL_CALC_FOUND_ROWS 
