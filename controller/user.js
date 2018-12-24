@@ -109,4 +109,23 @@ module.exports = {
             }
         })
     },
+    //tag
+    getTag(req, res){
+        var sql = 'select tagName,releaseNote,releaseTime from temp_tag order by releaseTime desc limit 0,50';
+        var values = [];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                    data = utils.formate(data);
+                    res.json({
+                        code: 200,
+                        data: data
+                    })
+            }
+        })
+    },
 }

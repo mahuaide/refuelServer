@@ -28,6 +28,7 @@ module.exports = {
      */
     login: USER + '/login/:userName/:password',
     getLoginUserInfo: USER + '/getLoginUserInfo',
+    getTag: USER + '/getTag',
     register:USER + '/register',
     checkUserExist:USER + '/checkUserExist/:userName',
 }

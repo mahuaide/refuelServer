@@ -31,6 +31,7 @@ router.delete(api.delRefuelLog, refuel.delRefuelLogById);
 router.post(api.login, user.login);
 router.get(api.getLoginUserInfo, user.getLoginUserInfo);
 router.get(api.checkUserExist, user.checkUserExist);
+router.get(api.getTag, user.getTag);
 router.post(api.register,user.register);
 
 module.exports = router;
