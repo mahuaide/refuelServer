@@ -83,7 +83,7 @@ module.exports = {
     },
     //获取登录人信息
     getLoginUserInfo(req, res){
-        var sql = 'select userId,userName,create_time,update_time,license,carType from users where userId=?';
+        var sql = 'select userId,userName,create_time,update_time,license,carType,mileage from users where userId=?';
         var userId = req.session.userId || '';
         var values = [userId];
         db.connnectPool(sql, values, (err, data, errMsg) => {
