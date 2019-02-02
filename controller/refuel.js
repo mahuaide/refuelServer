@@ -51,7 +51,8 @@ GROUP BY a.refuel_station_id`;
         a.oil_type,
         a.liters,
         b.station_name,
-        b.station_address 
+        b.station_address,
+        a.mileage 
         from refuel_log a,gas_station b 
         where a.refuel_station_id = b.station_id and a.userId = ? 
         order by a.refuel_time desc limit ?,?;
@@ -80,7 +81,7 @@ GROUP BY a.refuel_station_id`;
     },
     //根据加油站ID，更新加油站信息
     updateRefuelLogById(req, res){
-        var sql = 'update refuel_log set refuel_station_id=?,oil_type=?,liters=?,pay_type=?,pay_money=?,refuel_time=? where refuel_id=?';
+        var sql = 'update refuel_log set refuel_station_id=?,oil_type=?,liters=?,pay_type=?,pay_money=?,refuel_time=?,mileage=? where refuel_id=?';
         var refuel_id = req.params.id;
         var form = new formidable.IncomingForm();
         form.parse(req, function (err, fields, files) {
@@ -89,8 +90,9 @@ GROUP BY a.refuel_station_id`;
             var liters = fields.liters;
             var pay_type = fields.pay_type;
             var pay_money = fields.pay_money;
+            var mileage = fields.mileage;
             var refuel_time = new Date(fields.refuel_time);
-            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, refuel_id];
+            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, refuel_id,mileage];
             db.connnectPool(sql, values, (err, data, errMsg) => {
                 if (err) {
                     res.json({
@@ -108,7 +110,7 @@ GROUP BY a.refuel_station_id`;
     },
     //增加一条加油记录
     newRefuelLog(req, res){
-        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId) values (?,?,?,?,?,?,?)';
+        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId,mileage) values (?,?,?,?,?,?,?,?)';
         var form = new formidable.IncomingForm();
         form.parse(req, function (err, fields, files) {
             var refuel_station_id = fields.refuel_station_id;
@@ -116,9 +118,10 @@ GROUP BY a.refuel_station_id`;
             var liters = fields.liters;
             var pay_type = fields.pay_type;
             var pay_money = fields.pay_money;
+            var mileage = fields.mileage;
             var refuel_time = new Date(fields.refuel_time);
             var userId = req.session.userId;
-            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, userId];
+            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, userId,mileage];
             db.connnectPool(sql, values, (err, data, errMsg) => {
                 if (err) {
                     res.json({
