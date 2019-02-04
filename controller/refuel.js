@@ -92,7 +92,7 @@ GROUP BY a.refuel_station_id`;
             var pay_money = fields.pay_money;
             var mileage = fields.mileage;
             var refuel_time = new Date(fields.refuel_time);
-            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, refuel_id,mileage];
+            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time,mileage,refuel_id];
             db.connnectPool(sql, values, (err, data, errMsg) => {
                 if (err) {
                     res.json({
