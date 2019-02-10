@@ -12,6 +12,7 @@ var user = require('../controller/user')
  * 加油站
 */
 router.get(api.getStationAll, station.getStationAll);
+router.get(api.getGasPrice, station.getGasPrice);
 router.post(api.updateStationById, station.updateStationById);
 router.post(api.newStation, station.newStation);
 router.delete(api.delStation, station.delStationById);

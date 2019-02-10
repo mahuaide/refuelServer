@@ -7,6 +7,25 @@ var formidable = require('formidable');
 var utils = require('../utils/utils');
 
 module.exports = {
+    //油价信息
+    getGasPrice(req, res){
+        var sql = 'select * from gas_price';
+        var values = [];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                data = utils.formate(data);
+                res.json({
+                    code: 200,
+                    data: data
+                })
+            }
+        })
+    },
     //查询所有加油站信息
     getStationAll(req, res){
         var sql = 'select * from gas_station order by create_time desc';

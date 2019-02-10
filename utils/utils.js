@@ -11,11 +11,15 @@ module.exports = {
             let dataU = new Date(row.update_time).getTime();
             let dataR = new Date(row.refuel_time).getTime();
             let dataRT = new Date(row.releaseTime).getTime();
+            let dateAd = new Date(row.adjust_time).getTime();
+            let dataNe = new Date(row.next_time).getTime();
             return Object.assign({}, row, {
                 create_time: dateC,
                 update_time: dataU,
                 refuel_time: dataR,
-                releaseTime: dataRT
+                releaseTime: dataRT,
+                adjust_time: dateAd,
+                next_time: dataNe
             });
         });
     }

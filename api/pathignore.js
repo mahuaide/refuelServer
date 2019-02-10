@@ -3,5 +3,5 @@
  */
 // export const paths = ['/user/login/','/user/register','/user/checkUserExist'];
 module.exports = {
-    arr:['/user/login','/user/register','/user/checkUserExist','/user/getTag']
+    arr:['/user/login','/user/register','/user/checkUserExist','/user/getTag','/station/query/gasPrice']
 }

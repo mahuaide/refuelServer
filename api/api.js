@@ -10,6 +10,7 @@ module.exports = {
      * 加油站
      */
     getStationAll: STATION + '/query/all',
+    getGasPrice: STATION + '/query/gasPrice',
     updateStationById: STATION + '/updateInfo/:id',
     newStation: STATION + '/create',
     delStation: STATION + '/delete/:id',
