@@ -194,3 +194,17 @@ UNLOCK TABLES;
 -- Dump completed on 2018-12-27 14:40:29
 alter table users add mileage float;
 alter table refuel_log add mileage float;
+
+create table if not exists gas_price (
+   price_92 float,
+   price_95 float,
+   price_98 float,
+   price_0 float,
+   adjust_time date,
+   next_time date
+) default charset=utf8;
+
+ALTER TABLE gas_price MODIFY COLUMN price_92 FLOAT(10,2);
+ALTER TABLE gas_price MODIFY COLUMN price_95 FLOAT(10,2);
+ALTER TABLE gas_price MODIFY COLUMN price_98 FLOAT(10,2);
+ALTER TABLE gas_price MODIFY COLUMN price_0 FLOAT(10,2);
