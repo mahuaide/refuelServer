@@ -7,6 +7,12 @@ var api = require('../api/api');
 var station = require('../controller/station');
 var refuel = require('../controller/refuel');
 var user = require('../controller/user')
+var limit = require('../controller/limit')
+
+/**
+ * 限行
+ */
+router.get(api.getLimitDays, limit.getLimitDays);
 
 /**
  * 加油站

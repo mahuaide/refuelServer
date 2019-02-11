@@ -3,9 +3,15 @@
  */
 const STATION = '/station';
 const REFUEL = '/refuel';
-const USER = '/user'
+const USER = '/user';
+const LIMIT = '/limit'
 
 module.exports = {
+    /**
+     * 限行
+     */
+    getLimitDays: LIMIT + '/query/limitDays',
+
     /**
      * 加油站
      */
