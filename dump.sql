@@ -208,3 +208,52 @@ ALTER TABLE gas_price MODIFY COLUMN price_92 FLOAT(10,2);
 ALTER TABLE gas_price MODIFY COLUMN price_95 FLOAT(10,2);
 ALTER TABLE gas_price MODIFY COLUMN price_98 FLOAT(10,2);
 ALTER TABLE gas_price MODIFY COLUMN price_0 FLOAT(10,2);
+
+
+create table limitDays (
+ limit_from date,
+ limit_to date,
+ limit_num varchar(50)
+);
+
+insert into limitDays(
+limit_from,
+ limit_to,
+ limit_num
+) values(
+	'2019-01-07',
+    '2019-04-07',
+    '[[1, 6],[2, 7],[3, 8],[4, 9],[5, 0]]'
+);
+
+insert into limitDays(
+limit_from,
+ limit_to,
+ limit_num
+) values(
+	'2019-04-08',
+    '2019-07-07',
+    '[[5, 0],[1, 6],[2, 7],[3, 8],[4, 9]]'
+);
+
+
+insert into limitDays(
+limit_from,
+ limit_to,
+ limit_num
+) values(
+	'2019-07-08',
+    '2019-10-06',
+    '[[4, 9],[5, 0],[1, 6],[2, 7],[3, 8]]'
+);
+
+
+insert into limitDays(
+limit_from,
+ limit_to,
+ limit_num
+) values(
+	'2019-10-07',
+    '2020-01-05',
+    '[[3, 8],[4, 9],[5, 0],[1, 6],[2, 7]]'
+);
