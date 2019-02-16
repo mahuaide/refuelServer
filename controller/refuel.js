@@ -110,7 +110,7 @@ GROUP BY a.refuel_station_id`;
     },
     //增加一条加油记录
     newRefuelLog(req, res){
-        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId,mileage) values (?,?,?,?,?,?,?,?)';
+        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId,mileage) values (?,?,?,?,?,?,?,?);SELECT LAST_INSERT_ID() as refuel_id;';
         var form = new formidable.IncomingForm();
         form.parse(req, function (err, fields, files) {
             var refuel_station_id = fields.refuel_station_id;
@@ -131,7 +131,7 @@ GROUP BY a.refuel_station_id`;
                 } else {
                     res.json({
                         code: 200,
-                        data: {}
+                        data: {refuel_id:data[1][0].refuel_id}
                     })
                 }
             })
