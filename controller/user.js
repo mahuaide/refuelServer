@@ -83,9 +83,9 @@ module.exports = {
     },
     //获取登录人信息
     getLoginUserInfo(req, res){
-        var sql = 'select userId,userName,create_time,update_time,license,carType,mileage from users where userId=?';
+        var sql = 'select userId,userName,create_time,update_time,license,carType from users where userId=?;select sum(a.pay_money) as payTotal from refuel_log a where a.userId = ?;select max(mileage) as mileage from refuel_log where userId=?;';
         var userId = req.session.userId || '';
-        var values = [userId];
+        var values = [userId, userId,userId];
         db.connnectPool(sql, values, (err, data, errMsg) => {
             if (err) {
                 res.json({
@@ -93,11 +93,20 @@ module.exports = {
                     errMsg: errMsg
                 })
             } else {
-                if (data.length == 1) {
+                if (data[0].length == 1) {
                     data = utils.formate(data);
                     res.json({
                         code: 200,
-                        data: data
+                        data: {
+                            userId: data[0][0].userId,
+                            userName: data[0][0].userName,
+                            create_time: data[0][0].create_time,
+                            update_time: data[0][0].update_time,
+                            license: data[0][0].license,
+                            carType: data[0][0].carType,
+                            mileage: data[2][0].mileage,
+                            payTotal: data[1][0].payTotal
+                        }
                     })
                 } else {
                     res.json({
@@ -120,11 +129,11 @@ module.exports = {
                     errMsg: errMsg
                 })
             } else {
-                    data = utils.formate(data);
-                    res.json({
-                        code: 200,
-                        data: data
-                    })
+                data = utils.formate(data);
+                res.json({
+                    code: 200,
+                    data: data
+                })
             }
         })
     },
