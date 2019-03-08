@@ -209,6 +209,14 @@ ALTER TABLE gas_price MODIFY COLUMN price_95 FLOAT(10,2);
 ALTER TABLE gas_price MODIFY COLUMN price_98 FLOAT(10,2);
 ALTER TABLE gas_price MODIFY COLUMN price_0 FLOAT(10,2);
 
+insert into gas_price(
+   price_92,
+   price_95,
+   price_98,
+   price_0,
+   adjust_time,
+   next_time
+)values(6.72,7.16,8.14,6.38,now(),'2019-02-28');
 
 create table limitDays (
  limit_from date,
