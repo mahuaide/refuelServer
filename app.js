@@ -4,15 +4,18 @@ var router = require('./router/router');
 var session = require('express-session');
 var server = require('./config/server');
 var paths = require('./api/pathignore');
+var path = require('path');
+var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
+var server = require('./config/server')
 
-
+app.use('/oss/photo', express.static(path.join(__dirname, '/oss/photo')));
 app.use(session({
     secret: 'refuel',
-    name:'refuel',
+    name: 'refuel',
     resave: true,
     saveUninitialized: true,
-    cookie:{
-        maxAge:1000*60*60*24
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24
     }
 }))
 /**
@@ -33,20 +36,32 @@ app.use('*', function (req, res, next) {
 });
 
 //登录授权拦截
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     var check = true;
-    paths.arr.forEach(path =>{
-        if(req.path.startsWith(path)){
+    paths.arr.forEach(path => {
+        if (req.path.startsWith(path)) {
             check = false;
         }
     })
-    if(check && !req.session.userId){
+    if (check && !req.session.userId) {
         res.send(401);
-    }else{
+    } else {
         next();
     }
 })
 
+app.all('/oss/photo', (req, res, next) => {
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./oss/photo";
+    form.maxFieldsSize = 10 * 1024 * 1024;
+    form.keepExtensions = true;
+    form.parse(req, function (err, fields, files) {
+        if (err) {
+            throw err;
+        }
+        res.send(files.file.path.slice(10))
+    });
+});
 /**
  业务请求，集中在router中处理
  */
