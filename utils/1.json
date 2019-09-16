@@ -1,0 +1,16 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "diff": "--- a/server/aido-agile-server/aido-agile-impl/src/main/resources/mybatis/CardMapper.xml\n+++ b/server/aido-agile-server/aido-agile-impl/src/main/resources/mybatis/CardMapper.xml\n@@ -384,14 +384,14 @@\n             </foreach>\n         </if>\n         <if test=\"cardAS.version != null  and cardAS.version.queryType  == 2 \">\n-            and c.version is null\n+            and c.version is null or c.version = ''\n         </if>\n         <if test=\"cardAS.version != null  and cardAS.version.queryType  == 3 and  cardAS.version.data.size()>0\">\n             and ( c.version in\n             <foreach collection=\"cardAS.version.data\" open=\"(\" close=\")\" separator=\",\" item=\"iterm\">\n                 #{iterm}\n             </foreach>\n-            or c.version is null )\n+            or c.version is null  or c.version = '')\n         </if>\n         <if test=\"cardAS.createTimeBegin != null and cardAS.createTimeEnd != null \">\n             and c.create_time between #{cardAS.createTimeBegin} and #{cardAS.createTimeEnd}\n@@ -564,14 +564,14 @@\n             </foreach>\n         </if>\n         <if test=\"cardAS.version != null  and cardAS.version.queryType  == 2 \">\n-            and c.version is null\n+            and c.version is null    or c.version = ''\n         </if>\n         <if test=\"cardAS.version != null  and cardAS.version.queryType  == 3 and  cardAS.version.data.size()>0\">\n             and ( c.version in\n             <foreach collection=\"cardAS.version.data\" open=\"(\" close=\")\" separator=\",\" item=\"iterm\">\n                 #{iterm}\n             </foreach>\n-            or c.version is null )\n+            or c.version is null    or c.version = '' )\n         </if>\n         <if test=\"cardAS.createTimeBegin != null and cardAS.createTimeEnd != null \">\n             and c.create_time between #{cardAS.createTimeBegin} and #{cardAS.createTimeEnd}\n@@ -747,14 +747,14 @@\n             </foreach>\n         </if>\n         <if test=\"pageQuery.query.version != null  and pageQuery.query.version.queryType  == 2 \">\n-            and c.version is null\n+            and c.version is null   or c.version = ''\n         </if>\n         <if test=\"pageQuery.query.version != null  and pageQuery.query.version.queryType  == 3 and  pageQuery.query.version.data.size()>0\">\n             and ( c.version in\n             <foreach collection=\"pageQuery.query.version.data\" open=\"(\" close=\")\" separator=\",\" item=\"iterm\">\n                 #{iterm}\n             </foreach>\n-            or c.version is null )\n+            or c.version is null   or c.version = '' )\n         </if>\n         <if test=\"pageQuery.query.createTimeBegin != null and pageQuery.query.createTimeEnd != null \">\n             and c.create_time between #{pageQuery.query.createTimeBegin} and #{pageQuery.query.createTimeEnd}\n",
+      "new_path": "server/aido-agile-server/aido-agile-impl/src/main/resources/mybatis/CardMapper.xml",
+      "old_path": "server/aido-agile-server/aido-agile-impl/src/main/resources/mybatis/CardMapper.xml",
+      "a_mode": "100644",
+      "b_mode": "100644",
+      "new_file": false,
+      "renamed_file": false,
+      "deleted_file": false,
+      "too_large": false
+    }
+  ]
+}

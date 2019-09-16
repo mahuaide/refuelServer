@@ -45,6 +45,7 @@ app.use((req, res, next) => {
     })
     if (check && !req.session.userId) {
         res.send(401);
+        //next();
     } else {
         next();
     }

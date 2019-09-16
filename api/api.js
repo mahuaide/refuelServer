@@ -5,6 +5,7 @@ const STATION = '/station';
 const REFUEL = '/refuel';
 const USER = '/user';
 const LIMIT = '/limit'
+const GITLAB = '/gitlab'
 
 module.exports = {
     /**
@@ -38,4 +39,12 @@ module.exports = {
     getTag: USER + '/getTag',
     register:USER + '/register',
     checkUserExist:USER + '/checkUserExist/:userName',
+
+    /**
+     * gitlab
+     */
+    getProjects:GITLAB+'/getProjects',
+    getDiff:GITLAB+'/getDiff/:project/:sha',
+    getCommits:GITLAB+'/getCommits/:project/:branch',
+    getBranches:GITLAB+'/getBranches/:project',
 }

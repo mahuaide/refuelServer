@@ -8,6 +8,7 @@ var station = require('../controller/station');
 var refuel = require('../controller/refuel');
 var user = require('../controller/user')
 var limit = require('../controller/limit')
+var gitlab = require('../controller/gitlab')
 
 /**
  * 限行
@@ -40,6 +41,14 @@ router.get(api.getLoginUserInfo, user.getLoginUserInfo);
 router.get(api.checkUserExist, user.checkUserExist);
 router.get(api.getTag, user.getTag);
 router.post(api.register,user.register);
+
+/**
+ * gitlab
+ */
+router.get(api.getProjects, gitlab.getProjects);
+router.get(api.getDiff, gitlab.getDiff);
+router.get(api.getCommits, gitlab.getCommits);
+router.get(api.getBranches, gitlab.getBranches);
 
 module.exports = router;
 
