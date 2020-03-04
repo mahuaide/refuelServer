@@ -11,7 +11,6 @@ module.exports = {
                 "path": "/tabNave",
                 "name": "tabNave",
                 "component": "/tab/index",
-                "redirect": "/tabNave/vue0",
                 "children": [
                     {
                         "path": "vue0",
