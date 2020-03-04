@@ -47,4 +47,9 @@ module.exports = {
     getDiff:GITLAB+'/getDiff/:project/:sha',
     getCommits:GITLAB+'/getCommits/:project/:branch',
     getBranches:GITLAB+'/getBranches/:project',
+
+    /**
+     * 动态路由
+     */
+    getRouter:"/getRouter"
 }

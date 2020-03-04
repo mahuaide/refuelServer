@@ -9,6 +9,7 @@ var refuel = require('../controller/refuel');
 var user = require('../controller/user')
 var limit = require('../controller/limit')
 var gitlab = require('../controller/gitlab')
+var routerApi = require('../controller/router')
 
 /**
  * 限行
@@ -49,6 +50,12 @@ router.get(api.getProjects, gitlab.getProjects);
 router.get(api.getDiff, gitlab.getDiff);
 router.get(api.getCommits, gitlab.getCommits);
 router.get(api.getBranches, gitlab.getBranches);
+
+/**
+ * 动态路由
+ */
+router.get(api.getRouter, routerApi.getRouter);
+
 
 module.exports = router;
 
