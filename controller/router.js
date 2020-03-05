@@ -15,7 +15,8 @@ module.exports = {
                     {
                         "path": "vue0",
                         "component": "/nav/0",
-                        "name": "vue0"
+                        "name": "vue0",
+                        "meta":[1,2,3]
                     },
                     {
                         "path": "vue1",
