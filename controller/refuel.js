@@ -53,7 +53,8 @@ GROUP BY a.refuel_station_id`;
         b.station_name,
         b.station_address,
         a.mileage,
-        a.photo 
+        a.photo,
+        round(a.liters/(a.mileage-a.pre_mileage)*100,2) as avg_kilo
         from refuel_log a,gas_station b 
         where a.refuel_station_id = b.station_id and a.userId = ? 
         order by a.refuel_time desc limit ?,?;
