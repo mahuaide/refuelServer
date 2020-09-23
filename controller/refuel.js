@@ -113,33 +113,48 @@ GROUP BY a.refuel_station_id`;
     },
     //增加一条加油记录
     newRefuelLog(req, res){
-        var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId,mileage,photo) values (?,?,?,?,?,?,?,?,?);SELECT LAST_INSERT_ID() as refuel_id;';
-        var form = new formidable.IncomingForm();
-        form.parse(req, function (err, fields, files) {
-            var refuel_station_id = fields.refuel_station_id;
-            var oil_type = fields.oil_type;
-            var liters = fields.liters;
-            var pay_type = fields.pay_type;
-            var pay_money = fields.pay_money;
-            var mileage = fields.mileage;
-            var photo = fields.photo;
-            var refuel_time = new Date(fields.refuel_time);
-            var userId = req.session.userId;
-            var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, userId,mileage,photo];
-            db.connnectPool(sql, values, (err, data, errMsg) => {
-                if (err) {
-                    res.json({
-                        code: 500,
-                        errMsg: errMsg
+        var sql = `select max(mileage) as pre_mileage
+        from refuel_log a
+        where a.userId = ?;`;
+        var userId = req.session.userId;
+        var values = [userId];
+        db.connnectPool(sql, values, (err, data, errMsg) => {
+            if (err) {
+                res.json({
+                    code: 500,
+                    errMsg: errMsg
+                })
+            } else {
+                var pre_mileage =  data[0]["pre_mileage"] || 0;
+                var sql = 'insert into refuel_log (refuel_station_id,oil_type,liters,pay_type,pay_money,refuel_time,userId,mileage,photo,pre_mileage) values (?,?,?,?,?,?,?,?,?,?);SELECT LAST_INSERT_ID() as refuel_id;';
+                var form = new formidable.IncomingForm();
+                form.parse(req, function (err, fields, files) {
+                    var refuel_station_id = fields.refuel_station_id;
+                    var oil_type = fields.oil_type;
+                    var liters = fields.liters;
+                    var pay_type = fields.pay_type;
+                    var pay_money = fields.pay_money;
+                    var mileage = fields.mileage;
+                    var photo = fields.photo;
+                    var refuel_time = new Date(fields.refuel_time);
+                    var userId = req.session.userId;
+                    var values = [refuel_station_id, oil_type, liters, pay_type, pay_money, refuel_time, userId,mileage,photo,pre_mileage];
+                    db.connnectPool(sql, values, (err, data, errMsg) => {
+                        if (err) {
+                            res.json({
+                                code: 500,
+                                errMsg: errMsg
+                            })
+                        } else {
+                            res.json({
+                                code: 200,
+                                data: {refuel_id:data[1][0].refuel_id}
+                            })
+                        }
                     })
-                } else {
-                    res.json({
-                        code: 200,
-                        data: {refuel_id:data[1][0].refuel_id}
-                    })
-                }
-            })
-        });
+                });
+            }
+        })
     },
     //根据加油记录ID，删除加油记录信息
     delRefuelLogById(req, res){
