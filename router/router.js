@@ -10,6 +10,7 @@ var user = require('../controller/user')
 var limit = require('../controller/limit')
 var gitlab = require('../controller/gitlab')
 var routerApi = require('../controller/router')
+var url = require('../controller/url')
 
 /**
  * 限行
@@ -56,6 +57,10 @@ router.get(api.getBranches, gitlab.getBranches);
  */
 router.get(api.getRouter, routerApi.getRouter);
 
+/**
+ * ajax请求重定向
+ */
+router.get(api.redirectAjax, url.redirectAjax);
 
 module.exports = router;
 

@@ -11,5 +11,6 @@ module.exports = {
         '/limit/query/limitDays',
         '/refreshKey',
         '/gitlab',
-        '/getRouter']
+        '/getRouter', '/url/backToIndex'
+    ]
 }

@@ -9,9 +9,9 @@ module.exports = {
     // password:'khkiy53jlk35hy5yz34khxkmkj43ik0zxj4wl1ml',
     // database:'app_refuel',
     host:'localhost',
-    port:3306,
+    port:3307,
     user:'root',
-    password:'123456',
+    password:'abcd',
     database:'refuel',
     multipleStatements: true
 }

@@ -3,7 +3,7 @@
  */
 module.exports = {
     // server_host: '',
-    server_host: '192.168.1.4',
+    server_host: 'localhost',
     // server_port: '5050'
-    server_port: '3000'
+    server_port: '3002'
 }

@@ -6,6 +6,7 @@ const REFUEL = '/refuel';
 const USER = '/user';
 const LIMIT = '/limit'
 const GITLAB = '/gitlab'
+const URL = '/url'
 
 module.exports = {
     /**
@@ -37,19 +38,24 @@ module.exports = {
     login: USER + '/login/:userName/:password',
     getLoginUserInfo: USER + '/getLoginUserInfo',
     getTag: USER + '/getTag',
-    register:USER + '/register',
-    checkUserExist:USER + '/checkUserExist/:userName',
+    register: USER + '/register',
+    checkUserExist: USER + '/checkUserExist/:userName',
 
     /**
      * gitlab
      */
-    getProjects:GITLAB+'/getProjects',
-    getDiff:GITLAB+'/getDiff/:project/:sha',
-    getCommits:GITLAB+'/getCommits/:project/:branch',
-    getBranches:GITLAB+'/getBranches/:project',
+    getProjects: GITLAB + '/getProjects',
+    getDiff: GITLAB + '/getDiff/:project/:sha',
+    getCommits: GITLAB + '/getCommits/:project/:branch',
+    getBranches: GITLAB + '/getBranches/:project',
 
     /**
      * 动态路由
      */
-    getRouter:"/getRouter"
+    getRouter: "/getRouter",
+
+    /**
+     * ajax请求重定向
+     */
+    redirectAjax: URL + "/backToIndex",
 }
