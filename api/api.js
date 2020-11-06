@@ -55,7 +55,7 @@ module.exports = {
     getRouter: "/getRouter",
 
     /**
-     * ajax请求重定向
+     * 请求重定向
      */
     redirectAjax: URL + "/backToIndex",
 }
