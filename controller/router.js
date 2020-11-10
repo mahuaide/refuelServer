@@ -30,7 +30,7 @@ module.exports = {
                             },
                             {
                                 "path": "vue12",
-                                "component": "/nav/11",
+                                "component": "/nav/12",
                                 "name": "vue12"
                             }
                         ]
