@@ -6,7 +6,16 @@ var server = require('./config/server');
 var paths = require('./api/pathignore');
 var path = require('path');
 var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
-var server = require('./config/server')
+var fs = require('fs');
+var log = require('./log/log.js')
+// var http = require('http').Server(app);
+
+// var io = require('socket.io')(http, {
+//     path:'/socketIoTest',
+//     pingInterval: 10000,
+//     pingTimeout: 5000,
+//     cookie: true
+// });
 
 app.use('/oss/photo', express.static(path.join(__dirname, '/oss/photo')));
 app.use(session({
@@ -17,7 +26,7 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
-}))
+})) 
 /**
  跨域中间件，拦截OPTIONS请求返回200
  */
@@ -51,6 +60,38 @@ app.use((req, res, next) => {
     }
 })
 
+// io.on("connection", function (socket) {
+//     // console.log(1);
+//     //第一次握手时，取得项目ID
+//     console.log(socket.handshake.query.projectId);
+//     //通道ID
+//     let socketid = socket.id;
+//     //监听客户端发起查询项目状态请求，query中放projectId
+//     socket.on("getProjectState", function (query) {
+//       let lastStatus = "";
+//       //查询请求，从参数中获取项目ID
+//       console.log(query.projectId);
+//       setInterval(function () {
+//         //200毫秒轮询数据库或者文件
+//         let fileName = "log" + '1105' + ".json"
+//         fs.readFile(path.join(FILEPATH, fileName), 'utf-8', (err, data) => {
+//           let status = JSON.parse(data).data;
+//           if (lastStatus !== status) {
+//             lastStatus = status;
+//             //广播方式
+//             socket.emit("projectState",{"status": status})
+//             //点对点方式
+//             // if (io.sockets.connected[socketid]) {
+//             //   io.sockets.connected[socketid].emit("projectState", JSON.stringify({"data": status}))
+//             // }else{
+//             //   socket.disconnect(true)
+//             // }
+//           }
+//         })
+//       }, 200)
+//     })
+//   });
+
 app.all('/oss/photo', (req, res, next) => {
     var form = new formidable.IncomingForm();
     form.uploadDir = "./oss/photo";
@@ -66,7 +107,11 @@ app.all('/oss/photo', (req, res, next) => {
 /**
  业务请求，集中在router中处理
  */
+
+app.use(log)
 app.use(router);
+
+
 
 app.listen(server.server_port, server.server_host, (err) => {
     if (err) {

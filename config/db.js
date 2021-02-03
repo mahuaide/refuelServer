@@ -8,10 +8,10 @@ module.exports = {
     // user:'zyzwz5oj1x',
     // password:'khkiy53jlk35hy5yz34khxkmkj43ik0zxj4wl1ml',
     // database:'app_refuel',
-    host:'localhost',
-    port:3307,
+    host:'127.0.0.1',
+    port:3306,
     user:'root',
-    password:'abcd',
+    password:'123456',
     database:'refuel',
     multipleStatements: true
 }
