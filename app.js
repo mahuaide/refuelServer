@@ -8,14 +8,14 @@ var path = require('path');
 var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
 var fs = require('fs');
 var log = require('./log/log.js')
-// var http = require('http').Server(app);
+var http = require('http').Server(app);
 
-// var io = require('socket.io')(http, {
-//     path:'/socketIoTest',
-//     pingInterval: 10000,
-//     pingTimeout: 5000,
-//     cookie: true
-// });
+var io = require('socket.io')(http, {
+    path:'/socketIoTest',
+    pingInterval: 10000,
+    pingTimeout: 5000,
+    cookie: true
+});
 
 app.use('/oss/photo', express.static(path.join(__dirname, '/oss/photo')));
 app.use(session({
@@ -60,37 +60,34 @@ app.use((req, res, next) => {
     }
 })
 
-// io.on("connection", function (socket) {
-//     // console.log(1);
-//     //第一次握手时，取得项目ID
-//     console.log(socket.handshake.query.projectId);
-//     //通道ID
-//     let socketid = socket.id;
-//     //监听客户端发起查询项目状态请求，query中放projectId
-//     socket.on("getProjectState", function (query) {
-//       let lastStatus = "";
-//       //查询请求，从参数中获取项目ID
-//       console.log(query.projectId);
-//       setInterval(function () {
-//         //200毫秒轮询数据库或者文件
-//         let fileName = "log" + '1105' + ".json"
-//         fs.readFile(path.join(FILEPATH, fileName), 'utf-8', (err, data) => {
-//           let status = JSON.parse(data).data;
-//           if (lastStatus !== status) {
-//             lastStatus = status;
-//             //广播方式
-//             socket.emit("projectState",{"status": status})
-//             //点对点方式
-//             // if (io.sockets.connected[socketid]) {
-//             //   io.sockets.connected[socketid].emit("projectState", JSON.stringify({"data": status}))
-//             // }else{
-//             //   socket.disconnect(true)
-//             // }
-//           }
-//         })
-//       }, 200)
-//     })
-//   });
+io.on("connection", function (socket) {
+    // console.log(1);
+    //第一次握手时，取得握手參數
+    console.log(socket.handshake.query.who);
+    //通道ID
+    let socketid = socket.id;
+    socket.on("getLog", function (query) {
+      let lastData = "";
+      setInterval(function () {
+        //1秒轮询数据库或者文件
+        let fileName = "/log/access.log"
+        fs.readFile(path.join(__dirname, fileName), 'utf-8', (err, data) => {
+          let dataNew = data;
+          if (lastData !== dataNew) {
+            lastData = dataNew;
+            //广播方式
+            socket.emit("sendLog",lastData)
+            //点对点方式
+            // if (io.sockets.connected[socketid]) {
+            //   io.sockets.connected[socketid].emit("sendLog", lastData))
+            // }else{
+            //   socket.disconnect(true)
+            // }
+          }
+        })
+      }, 1000)
+    })
+  });
 
 app.all('/oss/photo', (req, res, next) => {
     var form = new formidable.IncomingForm();
@@ -109,9 +106,8 @@ app.all('/oss/photo', (req, res, next) => {
  */
 
 app.use(log)
+
 app.use(router);
-
-
 
 app.listen(server.server_port, server.server_host, (err) => {
     if (err) {
@@ -119,4 +115,12 @@ app.listen(server.server_port, server.server_host, (err) => {
         return
     }
     console.log('server Listening at http://' + server.server_host + ':' + server.server_port + '\n')
+})
+
+http.listen(server.server_port,(err) => {
+    if (err) {
+        console.log(err);
+        return
+    }
+    console.log('websocket Listening at http://' + server.server_host + ':' + server.server_port + '\n')
 })
