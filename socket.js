@@ -5,8 +5,8 @@ var fs = require('fs');
 var http = require('http').Server(app);
 
 var io = require('socket.io')(http, {
-    path:'/socketIoTest',
-    pingInterval: 10000,
+    path:'/socket.io',
+    pingInterval: 1000,
     pingTimeout: 5000,
     cookie: true
 });
@@ -22,12 +22,12 @@ io.on("connection", function (socket) {
     socket.on("getLog", function (query) {
       let lastData = "";
       //查询请求，从参数中获取项目ID
-      console.log(query.projectId);
       setInterval(function () {
         //1秒轮询数据库或者文件
+        console.log(new Date().toTimeString())
         let fileName = "/log/access.log"
         fs.readFile(path.join(__dirname, fileName), 'utf-8', (err, data) => {
-          let dataNew = JSON.parse(data).data;
+          let dataNew = data;
           if (lastData !== dataNew) {
             lastData = dataNew;
             //广播方式
@@ -44,7 +44,7 @@ io.on("connection", function (socket) {
     })
   });
 
-http.listen(3003, (err) => {
+http.listen(3003,"127.0.0.1",(err) => {
     if (err) {
         console.log(err);
         return

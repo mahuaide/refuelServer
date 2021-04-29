@@ -1,0 +1,140 @@
+{
+    "routers": [{
+            "path": "/refuel",
+            "name": "refuel",
+            "component": "/refuel"
+        },
+        {
+            "path": "/station",
+            "name": "station",
+            "component": "/gasStation"
+        },
+        {
+            "path": "/demo",
+            "name": "demo",
+            "component": "/demo",
+            "children": [{
+                    "path": "dndEcharts",
+                    "name": "dndEcharts",
+                    "component": "/dndEcharts"
+                },
+                {
+                    "path": "customLane",
+                    "name": "customLane",
+                    "component": "/customLane"
+                },
+                {
+                    "path": "customLaneLong",
+                    "name": "customLaneLong",
+                    "component": "/customLaneLong"
+                },
+                {
+                    "path": "complexKanban",
+                    "name": "complexKanban",
+                    "component": "/complexKanban"
+                },
+                {
+                    "path": "complexKanbanUserCustom",
+                    "name": "complexKanbanUserCustom",
+                    "component": "/complexKanbanUserCustom"
+                },
+                {
+                    "path": "complexKanbanUserCustomPerson",
+                    "name": "complexKanbanUserCustomPerson",
+                    "component": "/complexKanbanUserCustomPerson"
+                },
+                {
+                    "path": "customLaneCitic",
+                    "name": "customLaneCitic",
+                    "component": "/customLaneCitic"
+                },
+                {
+                    "path": "gitlabdiff",
+                    "name": "gitlabdiff",
+                    "component": "/gitlabdiff"
+                },
+                {
+                    "path": "wbsTree",
+                    "name": "wbsTree",
+                    "component": "/wbsTree"
+                },
+                {
+                    "path": "complexKanbanManager",
+                    "name": "complexKanbanManager",
+                    "component": "/complexKanbanManager"
+                },
+                {
+                    "path": "tableTree",
+                    "name": "tableTree",
+                    "component": "/treeDemo"
+                },
+                {
+                    "path": "complexKanbanCEO",
+                    "name": "complexKanbanCEO",
+                    "component": "/complexKanbanCEO"
+                },
+                {
+                    "path": "ip",
+                    "name": "ip",
+                    "component": "/IP"
+                },
+                {
+                    "path": "selectTable",
+                    "name": "ip",
+                    "component": "/selectTable"
+                },
+                {
+                    "path": "dmpTree",
+                    "name": "ip",
+                    "component": "/dmpTree"
+                },
+                {
+                    "path": "beijingDMPTable",
+                    "name": "beijingDMPTable",
+                    "component": "/beijingDMPTable"
+                },
+                {
+                    "path": "testTable",
+                    "name": "testTable",
+                    "component": "/testTable"
+                },
+                {
+                    "path": "disabledDate",
+                    "name": "disabledDate",
+                    "component": "/disabledDate"
+                },
+                {
+                    "path": "jsmind",
+                    "name": "jsmind",
+                    "component": "/jsmind"
+                },
+                {
+                    "path": "redirectAjax",
+                    "name": "redirectAjax",
+                    "component": "/redirectAjax"
+                },
+                {
+                    "path": "lifeCycle",
+                    "name": "lifeCycle",
+                    "component": "/lifeCycle/father.vue"
+                },
+                {
+                    "path": "slot",
+                    "name": "slot",
+                    "component": "/slot/fatherSlot.vue"
+                },
+                {
+                    "path": "log",
+                    "name": "log",
+                    "component": "/log.vue"
+                },
+                {
+                    "path": "async/:id",
+                    "name": "async",
+                    "component": "/promise.vue",
+                    "props": true
+                }
+            ]
+        }
+    ]
+}

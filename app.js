@@ -8,14 +8,9 @@ var path = require('path');
 var formidable = require('formidable') //post请求接收参数或者上传文件时候可能会用到
 var fs = require('fs');
 var log = require('./log/log.js')
-var http = require('http').Server(app);
 
-var io = require('socket.io')(http, {
-    path:'/socketIoTest',
-    pingInterval: 10000,
-    pingTimeout: 5000,
-    cookie: true
-});
+
+const FILEPATH = path.join(__dirname, `./files/`);
 
 app.use('/oss/photo', express.static(path.join(__dirname, '/oss/photo')));
 app.use(session({
@@ -46,6 +41,7 @@ app.use('*', function (req, res, next) {
 
 //登录授权拦截
 app.use((req, res, next) => {
+    console.log(req.url)
     var check = true;
     paths.arr.forEach(path => {
         if (req.path.startsWith(path)) {
@@ -60,34 +56,17 @@ app.use((req, res, next) => {
     }
 })
 
-io.on("connection", function (socket) {
-    // console.log(1);
-    //第一次握手时，取得握手參數
-    console.log(socket.handshake.query.who);
-    //通道ID
-    let socketid = socket.id;
-    socket.on("getLog", function (query) {
-      let lastData = "";
-      setInterval(function () {
-        //1秒轮询数据库或者文件
-        let fileName = "/log/access.log"
-        fs.readFile(path.join(__dirname, fileName), 'utf-8', (err, data) => {
-          let dataNew = data;
-          if (lastData !== dataNew) {
-            lastData = dataNew;
-            //广播方式
-            socket.emit("sendLog",lastData)
-            //点对点方式
-            // if (io.sockets.connected[socketid]) {
-            //   io.sockets.connected[socketid].emit("sendLog", lastData))
-            // }else{
-            //   socket.disconnect(true)
-            // }
-          }
-        })
-      }, 1000)
+// 菜单
+app.get('/getSysRouters', (req, res, next) => {
+    fs.readFile(path.join(FILEPATH, `router.json`), 'utf-8', (err, data) => {
+      if (err) {
+        res.send(404)
+      } else {
+        res.send(JSON.stringify(data))
+      }
     })
   });
+
 
 app.all('/oss/photo', (req, res, next) => {
     var form = new formidable.IncomingForm();
@@ -117,10 +96,3 @@ app.listen(server.server_port, server.server_host, (err) => {
     console.log('server Listening at http://' + server.server_host + ':' + server.server_port + '\n')
 })
 
-http.listen(server.server_port,(err) => {
-    if (err) {
-        console.log(err);
-        return
-    }
-    console.log('websocket Listening at http://' + server.server_host + ':' + server.server_port + '\n')
-})
