@@ -41,7 +41,6 @@ app.use('*', function (req, res, next) {
 
 //登录授权拦截
 app.use((req, res, next) => {
-    console.log(req.url)
     var check = true;
     paths.arr.forEach(path => {
         if (req.path.startsWith(path)) {

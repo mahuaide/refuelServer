@@ -13,7 +13,6 @@ var io = require('socket.io')(http, {
 
 
 io.on("connection", function (socket) {
-    // console.log(1);
     //第一次握手时，取得项目ID
     console.log(socket.handshake.query.projectId);
     //通道ID
@@ -49,5 +48,5 @@ http.listen(3003,"127.0.0.1",(err) => {
         console.log(err);
         return
     }
-    console.log("websocket")
+    console.log('websocket Listening at http://127.0.0.1:3003')
 })

@@ -65,7 +65,7 @@ module.exports = {
                     errMsg: errMsg
                 })
             } else {
-                if (data.length == 1) {
+                if (data.length == 1) { 
                     req.session.userId = data[0].userId;
                     res.json({
                         code: 200,
